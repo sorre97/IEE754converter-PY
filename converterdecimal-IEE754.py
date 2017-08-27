@@ -39,25 +39,41 @@ print ("Hi, this is a converter for decimals numbers to IEE754 binary for single
 print "Please insert your decimal value above"
 
 
+
 while (True):
 	
 	try:
-		num = raw_input(": ")
+		num = raw_input(": ").lower()
+		if num == "infinity" or num == "nan":
+			break
 		num = float(num)
-		break;
+		break
 	except ValueError:
 		print "The value inserted is not valid, please insert it again"
 
+SIGN = "1" if num < 0 else "0"
 
-SIGN = "0" if num > 0 else "1"
-num = abs(num)
-decimal,integer = modf(num)
+if num == "infinity":
+	EXP = bin(255)[2:]
+	MAN = "0"*23
+elif num == "nan":
+	EXP = bin(255)[2:]
+	MAN = "1"*23
+elif str(num).replace(".","").replace("-","").count("0") == len(str(num).replace(".","").replace("-","")):
+	if str(num)[0] == "-":
+		SIGN = "1"
+	EXP = "0"*8
+	MAN = "0"*23
 
-integerbin = bin(int(integer))[2:] #Integer value
-decimalbin = decToBin(decimal)	#Decimal value
-binaryNum = integerbin + "." + decimalbin #Concatenation of integer + decimal
-MAN,EXP = normalizer(binaryNum) #Normalizing number point
-MAN = MAN[2:25]
+else:
+	num = abs(num)
+	decimal,integer = modf(num)
+
+	integerbin = bin(int(integer))[2:] #Integer value
+	decimalbin = decToBin(decimal)	#Decimal value
+	binaryNum = integerbin + "." + decimalbin #Concatenation of integer + decimal
+	MAN,EXP = normalizer(binaryNum) #Normalizing number point
+	MAN = MAN[2:25]
 
 IEE754 = (SIGN + EXP + MAN)
 print IEE754
