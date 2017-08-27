@@ -44,11 +44,14 @@ while (True):
 if int(binum,2) == 0:
 	print "The value is conventionally 0"
 else:
+
 	SIGN = binum[0]
 	EXP = binum[1:9]
 	MAN = binum[9:]
+
+	#DISTINGUERE I CASI INFINITO,NUMERO DENORMALIZZATO ETC...
 	
 	number = binary_conversion(SIGN,EXP,MAN)
-	rounded_number = round(number,2)
+	rounded_number = round(number,3)
 	print str(number) + " ≈ " + str(rounded_number)
 	
