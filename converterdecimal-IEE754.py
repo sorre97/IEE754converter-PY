@@ -4,7 +4,7 @@ from math import modf
 #Functions
 def decToBin(decimal):
 	binary = ""
-	for i in range(31):
+	for i in range(50):
 		if (decimal * 2) >= 1:
 			binary += "1"
 			decimal = (decimal * 2) - 1
